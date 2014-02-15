@@ -4,6 +4,10 @@ require_once('config.php');
 if(isset($_POST['longURL'])){
 
 	$url=mysql_escape_string($_POST['longURL']);
+	if ($url=="") {
+		echo "provide an url";
+		exit;
+	}
 	$sql=$db->prepare("SELECT id FROM urls WHERE long_url LIKE :url");
 	$sql->bindParam(':url',$url, PDO::PARAM_STR);
 	$sql->execute();
@@ -12,15 +16,14 @@ if(isset($_POST['longURL'])){
 		$sql1=$db->prepare("SELECT short_url FROM urls WHERE id=?");
 		$sql1->execute(array($id));
 		$short_url=$sql1->fetchColumn();
-		
 	}else{
 		
-		$sql2=$db->prepare("INSERT INTO urls (long_url) VALUES (:long)");
+		$sql2=$db->prepare("INSERT INTO urls (long_url) VALUES (?)");
 		$sql2->execute(array($url));
 		$id=$db->lastInsertId();
 		$encoded = encode($id);
 		$short_url=HOST.$encoded;
-		$sql3=$db->prepare("INSERT INTO urls (short_url) VALUES (:short) WHERE id=:id");
+		$sql3=$db->prepare("UPDATE urls SET short_url=? WHERE id=?");
 		$sql3->execute(array($short_url,$id));
 	}
 
@@ -29,13 +32,13 @@ if(isset($_POST['longURL'])){
 	echo "provide an url";
 }
 
-function encode($val, $base=62, $chars='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+function encode($id, $base=62, $chars='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
     $str = '';
     do {
-        $i = $val % $base;
+        $i = $id % $base;
         $str = $chars[$i] . $str;
-        $val = ($val - $i) / $base;
-    } while($val > 0);
+        $id = ($id - $i) / $base;
+    } while($id > 0);
     return $str;
 }
 
