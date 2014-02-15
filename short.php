@@ -13,9 +13,8 @@ if(isset($_POST['longURL'])){
 	$sql->execute();
 	$id=(int)$sql->fetchColumn();
 	if($id>0){
-		$sql1=$db->prepare("SELECT short_url FROM urls WHERE id=?");
-		$sql1->execute(array($id));
-		$short_url=$sql1->fetchColumn();
+		$encoded = encode($id);
+		$short_url=HOST.$encoded;
 	}else{
 		
 		$sql2=$db->prepare("INSERT INTO urls (long_url) VALUES (?)");
