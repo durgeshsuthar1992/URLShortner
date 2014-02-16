@@ -25,7 +25,7 @@ if(isset($_POST['longURL'])){
 		$sql3=$db->prepare("UPDATE urls SET short_url=? WHERE id=?");
 		$sql3->execute(array($short_url,$id));
 	}
-
+	echo "Yay!!! Here is the Short URL for you : ".$short_url;
 
 }else{
 	echo "provide an url";
