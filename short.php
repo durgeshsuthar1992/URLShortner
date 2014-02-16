@@ -27,8 +27,6 @@ if(isset($_POST['longURL'])){
 	}
 	echo "Yay!!! Here is the Short URL for you : ".$short_url;
 
-}else{
-	echo "provide an url";
 }
 
 function encode($id, $base=62, $chars='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {

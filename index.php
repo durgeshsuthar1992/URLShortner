@@ -30,7 +30,7 @@
 
         <div class="row">
           <div class="col-lg-12 offset1">
-              	<form method="post" action="">
+              	<form method="post" action="./">
               		<h3>Give your long URL and I will make it short for you</h3>
                   <div class="form-group">
               		<input type="url" style="width:1000px;height:40px;" name="longURL" >
