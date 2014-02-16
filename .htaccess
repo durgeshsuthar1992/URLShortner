@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^([0-9a-zA-Z]{1,9})$ redirect.php?shorturl=$1 [L]
